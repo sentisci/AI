@@ -2,6 +2,7 @@ import copy
 
 class GameState:
 
+## Initialize all required variables
 boxes = [(s,t) for s in [0,1,2] for t in [0,1]]
 boardDict = {}
 player1Start=False
@@ -12,6 +13,8 @@ p1Box=()
 p2Box=()
 
 def __init__(self):
+	## Set the Active player TRUE & initialize the board as Dictionary with keys for
+	## boxes and value 0 or 1 if it is visited or not.
 	self.p1Move = True
 	for box in self.boxes: self.boardDict[box] = 0
 	self.boardDict[(2,1)]=1
@@ -24,6 +27,7 @@ def forecast_move(self, move):
 	move: tuple
 	The target position for the active player's next move
 	"""
+	## Copy the exsiting gamestate to new gamestate and change the player.
 	newBoard = copy.deepcopy(self)
 
 	if newBoard.p1Move==True:
@@ -49,6 +53,9 @@ def get_legal_moves(self):
 	be a pair of integers in (column, row) order specifying
 	the zero-indexed coordinates on the board.
 	"""
+	
+	## Return empty boxes if game has just started else use the rules ( row, column or diagonal ) to identify the 
+	## legal moves for a player
 	if self.player1Start==False:
 		legalMoves = [box for box in self.boxes if self.boardDict[box] != 1]
 		self.player1Start=True
